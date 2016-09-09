@@ -120,19 +120,33 @@ module.exports = exports = Player;
  * @param {Postition} position object specifying an x and y
  */
 function Player(position) {
+  this.state = "waiting";
   this.x = position.x;
   this.y = position.y;
   this.width  = 16;
   this.height = 16;
   this.spritesheet  = new Image();
   this.spritesheet.src = encodeURI('assets/link/not link/notlink up.png');
+
+  var self = this;
+  window.onmouseclick = function(event){
+    self.x = event.clientX;
+    self.state = "walking"
+  }
 }
 
 /**
  * @function updates the player object
  * {DOMHighResTimeStamp} time the elapsed time since the last frame
  */
-Player.prototype.update = function(time) {}
+Player.prototype.update = function(time) {
+  switch(this.state){
+    case "walking":
+      this.x += 1;
+      break;
+  }
+
+}
 
 /**
  * @function renders the player into the provided context
