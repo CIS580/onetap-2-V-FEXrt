@@ -1,17 +1,17 @@
 "use strict";
 
 /**
- * @module exports the Player class
+ * @module exports the Enemy class
  */
-module.exports = exports = Player;
+module.exports = exports = Enemy;
 
 /**
- * @constructor Player
- * Creates a new player object
+ * @constructor Enemy
+ * Creates a new Enemy object
  * @param {Postition} position object specifying an x and y
  */
-function Player(position) {
-  this.state = "waiting";
+function Enemy(position, imageURL) {
+  this.state = "walking";
   this.frame = 0;
   this.timer = 0;
   this.x = position.x;
@@ -19,22 +19,14 @@ function Player(position) {
   this.width  = 16;
   this.height = 16;
   this.spritesheet  = new Image();
-  this.spritesheet.src = encodeURI('assets/link/not link/notlink up.png');
-
-  var self = this;
-  window.onmousedown = function(event){
-    if(self.state == "waiting"){
-      self.x = event.clientX;
-      self.state = "walking"
-    }
-  }
+  this.spritesheet.src = encodeURI(imageURL);
 }
 
 /**
  * @function updates the player object
  * {DOMHighResTimeStamp} time the elapsed time since the last frame
  */
-Player.prototype.update = function(elapsedTime) {
+Enemy.prototype.update = function(elapsedTime) {
   this.timer += elapsedTime;
 
   switch(this.state){
@@ -44,7 +36,7 @@ Player.prototype.update = function(elapsedTime) {
         this.timer = 0;
       }
 
-      this.y -= 1;
+      //this.y -= 1;
       break;
   }
 
@@ -55,7 +47,7 @@ Player.prototype.update = function(elapsedTime) {
  * {DOMHighResTimeStamp} time the elapsed time since the last frame
  * {CanvasRenderingContext2D} ctx the context to render into
  */
-Player.prototype.render = function(time, ctx) {
+Enemy.prototype.render = function(time, ctx) {
   ctx.drawImage(
     // image
     this.spritesheet,
